@@ -22,9 +22,9 @@ class DB {
 
     findAllEmployees() {
         return this.connection.promise().query(
-          "SELECT employee.id, employee.first_name AS 'First Name', employee.last_name AS 'Last Name', role.title AS 'Job Title', department.name AS department, role.salary AS Salaries, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;"
+            "SELECT employee.id, employee.first_name AS 'First Name', employee.last_name AS 'Last Name', role.title AS 'Job Title', department.name AS department, role.salary AS Salaries, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;"
         );
-      }
+    }
 
     //Create a new department
     createDepartment(newDepartment) {
@@ -50,7 +50,7 @@ class DB {
         );
     }
 
-//Update an employee's role
+    //Update an employee's role
     updateEmployeeRole(employee_Id, role_Id) {
         return this.connection.promise().query(
             "UPDATE employee SET role_id = ? WHERE id = ?",
@@ -58,12 +58,47 @@ class DB {
         );
     }
 
+    //show budget by department
+    viewBudgetDepartment() {
+        return this.connection.promise().query(
+            "SELECT department.name AS Department, SUM(role.salary) AS 'Total Budget' FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id GROUP BY department.name;"
+
+        );
+    }
+
+    // remove department
+
+    removeDepartment(department_id) {
+
+        return this.connection.promise().query(
+            "DELETE FROM department WHERE id = ?",
+            department_id
+        );
+    }
+
+    // remove role
+
+    removeRole(role_id) {
+
+        return this.connection.promise().query(
+            "DELETE FROM role WHERE id = ?",
+            role_id
+        );
+    }
+
+    // remove employee
+
+    removeEmployee(employee_id) {
+        
+        return this.connection.promise().query(
+            "DELETE FROM employee WHERE id = ?",
+            employee_id
+        );
+
+    }
 
 
 }
-
-
-
 
 
 

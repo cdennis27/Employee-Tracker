@@ -49,6 +49,22 @@ function loadMainMenu() {
                     value: "UPDATE_EMPLOYEE_ROLE"
                 },
                 {
+                    name: "View Total Utilized Budget By Department",
+                    value: "VIEW_USED_BUDGET_BY_DEPARTMENT"
+                },
+                {
+                    name: "Remove a Department",
+                    value: "REMOVE_DEPARTMENT"
+                },
+                {
+                    name: "Remove a Role",
+                    value: "REMOVE_ROLE"
+                },
+                {
+                    name: "Remove an Employee",
+                    value: "REMOVE_EMPLOYEE"
+                },
+                {
                     name: "Exit",
                     value: "EXIT"
                 }
@@ -78,6 +94,18 @@ function loadMainMenu() {
                 break;
             case "UPDATE_EMPLOYEE_ROLE":
                 updateEmployeeRole();
+                break;
+            case "VIEW_USED_BUDGET_BY_DEPARTMENT":
+                viewUsedBudgetByDepartment();
+                break;
+            case "REMOVE_DEPARTMENT":
+                deleteDepartment();
+                break;
+            case "REMOVE_ROLE":
+                deleteRole();
+                break;
+            case "REMOVE_EMPLOYEE":
+                deleteEmployee();
                 break;
             case "EXIT":
                 exit();
@@ -146,7 +174,7 @@ function addRole() {
         .then(([rows]) => {
             let departments = rows;
             //console.log(departments);
-            const departmentChoices = departments.map(({ id, "Department":name }) => ({
+            const departmentChoices = departments.map(({ id, "Department": name }) => ({
                 name: name,
                 value: id
             }));
@@ -300,15 +328,98 @@ function updateEmployeeRole() {
         })
 
 }
+// view all budgets per department
+function viewUsedBudgetByDepartment() {
+    db.viewBudgetDepartment()
+        .then(([rows]) => {
+            let departments = rows;
+            //console.log(departments);
+            console.log("\n");
+            console.table(departments);
+        })
+        .then(() => loadMainMenu());
+
+}
+// delete department
+function deleteDepartment() {
+    db.findAllDepartments()
+        .then(([rows]) => {
+            let departments = rows;
+            //console.log(departments);
+            const departmentChoices = departments.map(({ id, "Department": name }) => ({
+                name: name,
+                value: id
+            }));
+
+            prompt({
+
+                type: "list",
+                name: "department_id",
+                message: "Choose the department to delete.",
+                choices: departmentChoices
+            })
+                .then(res => db.removeDepartment(res.department_id))
+                .then(() => console.log("Deleted department"))
+                .then(() => loadMainMenu());
+        })
+}
+
+// delete role
+function deleteRole() {
+    db.findAllRoles()
+        .then(([rows]) => {
+            let roles = rows;
+            //console.log(roles);
+            const roleChoices = roles.map(({ id, "Job Title": title }) => ({
+                name: title,
+                value: id
+            }));
+
+            prompt([
+                {
+                    type: "list",
+                    name: "role_id",
+                    message: "Choose the role to delete.",
+                    choices: roleChoices
+                }
+            ])
+                .then(res => db.removeRole(res.role_id))
+                .then(() => console.log("Deleted role"))
+                .then(() => loadMainMenu());
+        })
+}
 
 
+// delete employee
 
+function deleteEmployee() {
+    db.findAllEmployees()
+        .then(([rows]) => {
+            let employees = rows;
+            //console.log(employees);
+            const employeeChoices = employees.map(({ id, "First Name": first_name, "Last Name": last_name }) => ({
+                name: `${first_name} ${last_name}`,
+                value: id
+            }));
 
+            prompt([
+                {
+                    type: "list",
+                    name: "employee_id",
+                    message: "Choose the employee to delete.",
+                    choices: employeeChoices
+                }
+            ])
+                .then(res => db.removeEmployee(res.employee_id))
+                .then(() => console.log("Deleted employee"))
+                .then(() => loadMainMenu());
+        })
+}
 
 function exit() {
-    console.log("Thank you! Bye!");
-    process.exit();
-}
+                    console.log("Thank you! Bye!");
+                    process.exit();
+                }
 
 
 

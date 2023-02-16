@@ -27,6 +27,9 @@
   2nd: Create a New Package JSON file. Type npm init on command prompt, inside the root folder.<br>
 
   3rd: Install inquirer, dotenv, mysql2, asciiart-logo and console.table modules and other dependencies. Type "npm i dependency --save" on command prompt at root folder to install all packages. <br>
+  Create a new file in the root folder, named .env, in it add your credentials to login into your mysql database. Sample: <br>
+  ![ScreenShots of Application in use.](./assets/screenshot3.jpg)
+   <br>
 
   4th: Run "node index.js" at command prompt, make sure you have Node.js installed. Please check node installation tutorials for more information:
   https://nodejs.org/en/

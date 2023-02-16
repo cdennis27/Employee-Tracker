@@ -51,7 +51,7 @@
 
   ## Link to Project Repository
 
-  https://github.com/cdennis27/Employee-Tracker-Table
+  https://github.com/cdennis27/Employee-Tracker
 
   ## Requirements
 

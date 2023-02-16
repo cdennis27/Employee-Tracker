@@ -40,6 +40,8 @@
   ## Screenshots
 
 ![ScreenShots of Application in use.](./assets/screenshot.jpg)
+
+![ScreenShots of Application in use.](./assets/screenshot2.jpg)
   
   ## Application Link
 
@@ -47,7 +49,7 @@
 
   ## Link to tutorial video how to install and use application
 
-  https://drive.google.com/file/d/1RlLdP6MMt-HC3ZMa846TSPPexdo_lFF_/view
+  https://drive.google.com/file/d/1yqm3ADj85x0WGhxaKwBq-j4GoGfqV1D6/view
 
   ## Link to Project Repository
 
